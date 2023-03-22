@@ -14,27 +14,58 @@ function getComputerChoice() {
     return computerChoice;
   }
 }
+
 //Create a function to play a single round and return the result
 function playRound(playerSelection, computerSelection) {
   let isTie = playerSelection === computerSelection;
   playerSelection = playerSelection.toLowerCase();
 
   if (isTie) {
-    return "It's a tie!";
+    return "tie";
   } else if (playerSelection === "rock") {
-    return computerSelection === "paper"
-      ? "You Lose! Paper beats rock!"
-      : "You Win! Rock beats scissors!";
+    return computerSelection === "paper" ? "computer" : "player";
   } else if (playerSelection === "paper") {
-    return computerSelection === "rock"
-      ? "You Win! Paper beats rock!"
-      : "You Lose! Scissors beat paper!";
-  } else if (playerSelection === "scissors") {
-    return computerSelection === "rock"
-      ? "You Lose! Rock beats scissors!"
-      : "You Win! Scissors beat paper!";
+    return computerSelection === "rock" ? "player" : "computer";
   } else {
-    return "You have entered an invalid choice!";
+    return computerSelection === "rock" ? "computer" : "player";
   }
 }
+
 //Create a function to play a 5 round game
+function game() {
+  let gameCount = 0;
+  let playerWins = 0;
+  let computerWins = 0;
+
+  while (gameCount < 5) {
+    let playerChoice = prompt("Enter your choice (rock, paper, or scissors):");
+    let winner;
+
+    while (
+      (playerChoice !== "rock" &&
+        playerChoice !== "paper" &&
+        playerChoice !== "scissors") ||
+      playerChoice === null
+    ) {
+      playerChoice = prompt(
+        "You have entered an invalid choice. Please enter a valid choice (rock, paper, or scissors):"
+      );
+    }
+
+    winner = playRound(playerChoice, getComputerChoice());
+
+    if (winner === "player") {
+      console.log("You win!");
+      playerWins++;
+      gameCount++;
+    } else if (winner === "computer") {
+      console.log("Computer wins!");
+      computerWins++;
+      gameCount++;
+    } else {
+      console.log("It's a tie!");
+    }
+  }
+}
+
+game();
